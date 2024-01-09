@@ -1,0 +1,19 @@
+参考にしたサイト
+PunTurnManager https://youdoyou-motto.com/punturnmanager-baseknowledge
+
+
+ToDo
+	ゲームシステム関係
+		イラスト
+		音楽
+		ゲームオーバー
+	PhotonNetwork関係
+		（ロビーでルームを設定できるようにする）→非推奨だった
+
+
+アイデア
+		ステージ
+			テレポーター
+
+		プレイヤー
+			二段ジャンプ
