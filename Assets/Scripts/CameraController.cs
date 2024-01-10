@@ -11,6 +11,7 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] private float stageWidth;//ƒJƒƒ‰‚ğ“®‚©‚·’[‚ÌXÀ•W
     private Scrollbar sb;
+
     private void Start()
     {
         sb = GetComponent<Scrollbar>();
@@ -19,6 +20,6 @@ public class CameraController : MonoBehaviour
     public void OnUpdate()//Scrollbar‚ÌOnValueChanged‚Éİ’è‚·‚é
     {
         float cameraPosition = sb.value * stageWidth * 2 + -stageWidth;
-        Camera.main.transform.position = new Vector3(cameraPosition, 0, -10);
+        Camera.main.transform.position = new Vector3(cameraPosition, Camera.main.transform.position.y, -10);
     }
 }

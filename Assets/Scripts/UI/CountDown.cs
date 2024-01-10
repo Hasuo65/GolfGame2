@@ -30,7 +30,7 @@ public class CountDown : MonoBehaviour
             yield return new WaitForSeconds(1);
             count--;
             text.text = count.ToString("00");
-            if(count == 0)
+            if(count <= 0)
             {
                 gameManager.OnEndRound();
                 break;

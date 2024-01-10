@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &5503707689624438560
+--- !u!1001 &8729125671665049382
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,31 +10,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2077911218974834195, guid: 960c9cac9fc3d64428b1a8a07a8722aa, type: 3}
       propertyPath: m_Name
-      value: BounceyGreen Variant
+      value: NormalGreen60deg Variant
       objectReference: {fileID: 0}
     - target: {fileID: 4300533300673190528, guid: 960c9cac9fc3d64428b1a8a07a8722aa, type: 3}
-      propertyPath: m_Color.b
-      value: 0.9261122
-      objectReference: {fileID: 0}
-    - target: {fileID: 4300533300673190528, guid: 960c9cac9fc3d64428b1a8a07a8722aa, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4300533300673190528, guid: 960c9cac9fc3d64428b1a8a07a8722aa, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5563679112102710076, guid: 960c9cac9fc3d64428b1a8a07a8722aa, type: 3}
-      propertyPath: m_Material
+      propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 6200000, guid: e0876dc2858a5804b8cd3044f69bf611, type: 2}
+      objectReference: {fileID: 21300000, guid: 7f90c106e04989f43bdc91397676cb20, type: 3}
     - target: {fileID: 7502757719827039348, guid: 960c9cac9fc3d64428b1a8a07a8722aa, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.155384
+      value: -17.27197
       objectReference: {fileID: 0}
     - target: {fileID: 7502757719827039348, guid: 960c9cac9fc3d64428b1a8a07a8722aa, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.9720933
+      value: 1.6605324
       objectReference: {fileID: 0}
     - target: {fileID: 7502757719827039348, guid: 960c9cac9fc3d64428b1a8a07a8722aa, type: 3}
       propertyPath: m_LocalPosition.z
@@ -67,6 +55,46 @@ PrefabInstance:
     - target: {fileID: 7502757719827039348, guid: 960c9cac9fc3d64428b1a8a07a8722aa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9064306807414119680, guid: 960c9cac9fc3d64428b1a8a07a8722aa, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 10.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 9064306807414119680, guid: 960c9cac9fc3d64428b1a8a07a8722aa, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9064306807414119680, guid: 960c9cac9fc3d64428b1a8a07a8722aa, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[0].x
+      value: 1.46839
+      objectReference: {fileID: 0}
+    - target: {fileID: 9064306807414119680, guid: 960c9cac9fc3d64428b1a8a07a8722aa, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[0].y
+      value: 1.5126467
+      objectReference: {fileID: 0}
+    - target: {fileID: 9064306807414119680, guid: 960c9cac9fc3d64428b1a8a07a8722aa, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[1].x
+      value: -3.8674035
+      objectReference: {fileID: 0}
+    - target: {fileID: 9064306807414119680, guid: 960c9cac9fc3d64428b1a8a07a8722aa, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[1].y
+      value: -1.5777849
+      objectReference: {fileID: 0}
+    - target: {fileID: 9064306807414119680, guid: 960c9cac9fc3d64428b1a8a07a8722aa, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[2].x
+      value: 3.2432852
+      objectReference: {fileID: 0}
+    - target: {fileID: 9064306807414119680, guid: 960c9cac9fc3d64428b1a8a07a8722aa, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[2].y
+      value: -1.5760207
+      objectReference: {fileID: 0}
+    - target: {fileID: 9064306807414119680, guid: 960c9cac9fc3d64428b1a8a07a8722aa, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[3].x
+      value: 2.1956615
+      objectReference: {fileID: 0}
+    - target: {fileID: 9064306807414119680, guid: 960c9cac9fc3d64428b1a8a07a8722aa, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[3].y
+      value: -0.34813976
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

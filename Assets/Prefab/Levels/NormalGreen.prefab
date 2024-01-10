@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7502757719827039348}
   - component: {fileID: 4300533300673190528}
-  - component: {fileID: 5563679112102710076}
+  - component: {fileID: 9064306807414119680}
   m_Layer: 0
   m_Name: NormalGreen
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -14.155384, y: 0.9720933, z: 0}
-  m_LocalScale: {x: 4, y: 0.26, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f5e40c9fd2fd16f4297df25d276f5909, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -85,8 +85,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &5563679112102710076
-BoxCollider2D:
+--- !u!60 &9064306807414119680
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,7 +94,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 2077911218974834195}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 26177565fa4ea784da3bf3c822c33d07, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -121,12 +121,17 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 5.12, y: 5.12}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 2.1909823, y: 0.29045275}
+      - {x: -1.5628552, y: 0.29003137}
+      - {x: -2.4070983, y: -0.023877151}
+      - {x: -1.562082, y: -0.33516967}
+      - {x: 2.1956615, y: -0.34813976}
+  m_UseDelaunayMesh: 0
