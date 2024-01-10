@@ -109,6 +109,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (RoomGameManager.playersWipedOut.Contains(PhotonNetwork.LocalPlayer))
         {
             Debug.Log("Wiped");
+            gameState = GameState.gameOver;
         }
         else
         {

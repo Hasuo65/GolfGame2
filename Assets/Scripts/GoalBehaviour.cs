@@ -31,7 +31,9 @@ public class GoalBehaviour : MonoBehaviourPunCallbacks
             {
                 gameManager.roomGameManager.PlayerGoal(owner);
             }
+            GameManager.playerAvatars.Remove(collision.gameObject);
             Destroy(collision.transform.parent.gameObject);//ゲームオブジェクトを消す
+            
         }
     }
 }
