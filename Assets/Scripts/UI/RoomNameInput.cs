@@ -15,10 +15,8 @@ public class RoomNameInput : MonoBehaviourPunCallbacks
 
     public void OnEnter()
     {
-        Debug.Log("OnEnter");
-        if (Input.GetKey(KeyCode.Return)||Input.GetKey(KeyCode.KeypadEnter))
+        if (Input.GetKey(KeyCode.Return)||Input.GetKey(KeyCode.KeypadEnter))//その辺をクリックしても実行されるからEnterを押したときだけ実行されるようにする
         {
-            Debug.Log("Enter");
             PhotonNetwork.ConnectUsingSettings();
         }
     }

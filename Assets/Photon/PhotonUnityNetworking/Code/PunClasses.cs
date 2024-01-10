@@ -926,6 +926,7 @@ namespace Photon.Pun
         public static PhotonView GetPhotonView(this UnityEngine.GameObject go)
         {
             return go.GetComponent<PhotonView>() as PhotonView;
+ 
         }
 
         /// <summary>compares the squared magnitude of target - second to given float value</summary>

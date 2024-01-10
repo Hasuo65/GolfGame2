@@ -30,8 +30,14 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     [SerializeField] private bool simulateTrail;
 
+    [SerializeField] private AudioClip shotSound;//ボールを打った時の音
+    private AudioSource audioSource;
+
+    private Vector3[] veroPoints = new Vector3[16];
+
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody2D>();
         ball = transform.GetChild(0).transform.gameObject;
         sprite = ball.GetComponent<SpriteRenderer>();
@@ -91,30 +97,40 @@ public class PlayerController : MonoBehaviourPunCallbacks
         if (clickFirst)//初めのフレームはこれが呼び出される
         {
             initialVec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            arrowObjectInstance = Instantiate(arrowImage, (Vector2)transform.position, Quaternion.FromToRotation(initialVec, fireVec) * Quaternion.Euler(0, 0, 90));
             ip = Instantiate(initialPoint, initialVec, Quaternion.identity);
             clickFirst = false;
             if (simulateTrail)
             {
                 BeginSimulation();
             }
+            else
+            {
+                arrowObjectInstance = Instantiate(arrowImage, (Vector2)transform.position, Quaternion.FromToRotation(initialVec, fireVec) * Quaternion.Euler(0, 0, 90));
+            }
             return;
         }
 
         //次のフレームから呼び出される
         fireVec = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - initialVec;
-        arrowObjectInstance.transform.position = transform.position;//矢印の操作
-        arrowObjectInstance.transform.rotation = Quaternion.FromToRotation(Vector3.up, fireVec.normalized) * Quaternion.Euler(0, 0, -90);//矢印の操作
-        arrowObjectInstance.transform.localScale = new Vector2(0.3f, 0.1f) * fireVec.magnitude;//矢印の操作
+        
         if (simulateTrail)
         {
             DuringSimulation();
+        }
+        else
+        {
+            arrowObjectInstance.transform.position = transform.position;//矢印の操作
+            arrowObjectInstance.transform.rotation = Quaternion.FromToRotation(Vector3.up, fireVec.normalized) * Quaternion.Euler(0, 0, -90);//矢印の操作
+            arrowObjectInstance.transform.localScale = new Vector2(0.3f, 0.1f) * fireVec.magnitude;//矢印の操作
         }
     }
 
     public void OnClickExit()//ドラッグをやめたら
     {
-        Destroy(arrowObjectInstance);
+        if (!simulateTrail)
+        {
+            Destroy(arrowObjectInstance);
+        }
         Destroy(ip);
         fireVec = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - initialVec;
         OwnerShoot(fireVec);
@@ -131,6 +147,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
         isStop = false;
         firstStop = true;
         clickFirst = true;
+        audioSource.PlayOneShot(shotSound);
+        simulationLine.positionCount = 0;
     }
 
     [PunRPC]//ほかの人の処理
@@ -139,6 +157,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     {
         rb.AddForce(force * -50);
         transform.position = position;//ラグを防ぐ
+        audioSource.PlayOneShot(shotSound);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)//ゴール判定はプレイヤーごとに行う
@@ -230,6 +249,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     /// </summary>
     public void BeginSimulation()
     {
+        Debug.Log("Begin");
         currentPosition = rb.position;
     }
 
@@ -240,12 +260,12 @@ public class PlayerController : MonoBehaviourPunCallbacks
     {
         //var position = GetMousePosition();
 
-/*        currentForce = position - dragStart;
-        if (currentForce.magnitude > MaxMagnitude * MaxMagnitude)
-        {
-            currentForce *= MaxMagnitude / currentForce.magnitude;
-        }*/
-
+        /*        currentForce = position - dragStart;
+                if (currentForce.magnitude > MaxMagnitude * MaxMagnitude)
+                {
+                    currentForce *= MaxMagnitude / currentForce.magnitude;
+                }*/
+        Debug.Log("During");
         StartCoroutine(Simulation());
     }
 
@@ -257,17 +277,18 @@ public class PlayerController : MonoBehaviourPunCallbacks
     {
 
         // 自動的な物理運動を停止させる
-        Physics.simulationMode = SimulationMode.Script;
+        Physics2D.simulationMode = SimulationMode2D.Script;
 
-        var points = new List<Vector2> { currentPosition };
-        rb.AddForce(fireVec*-50,ForceMode2D.Impulse);
+        var points = new List<Vector2> { };
+        rb.AddForce(fireVec * -50);
+
 
         // 運動の軌跡をシミュレーションして記録する
         for (var i = 1; i < 16; i++)
         {
-            Physics.Simulate(1);
-            points.Add(transform.TransformPoint(transform.position));
-            Debug.Log(transform.TransformPoint(transform.position));
+            Physics2D.Simulate(DeltaTime);
+            points.Add(rb.position - currentPosition);
+
         }
 
         // もとの位置に戻す
@@ -277,13 +298,13 @@ public class PlayerController : MonoBehaviourPunCallbacks
         // 予測地点をつないで軌跡を描画
         simulationLine.positionCount = points.Count;
         List<Vector3> vec3List = new List<Vector3>();
-        foreach(Vector2 point in points)
+        foreach (Vector2 point in points)
         {
             vec3List.Add(point);
         }
         simulationLine.SetPositions(vec3List.ToArray());
 
-        Physics.simulationMode = SimulationMode.FixedUpdate;
+        Physics2D.simulationMode = SimulationMode2D.FixedUpdate;
 
         yield return WaitForFixedUpdate;
     }
@@ -301,9 +322,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
         /// ボールをはじく
         /// </summary>
         /// <param name="force"></param>*/
-/*    public void Flip(Vector3 force)
-    {
-        // 瞬間的に力を加えてはじく
-        this.rb.AddForce(force, ForceMode.Impulse);
-    }*/
+    /*    public void Flip(Vector3 force)
+        {
+            // 瞬間的に力を加えてはじく
+            this.rb.AddForce(force, ForceMode.Impulse);
+        }*/
 }
