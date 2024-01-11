@@ -74,18 +74,28 @@ public class PlayerController : MonoBehaviourPunCallbacks
             if (firstStop && stopTimer >= 1)
             {
                 //---‚±‚±‚É~‚Ü‚Á‚½‚Ìˆ—‚ğ‘‚­
-                sprite.color = Color.white;
+                sprite.color = Color.gray;
                 hitTime = 0;
                 //----
                 firstStop = false;
                 isStop = true;
                 stopTimer = 0;
+                if (photonView.IsMine)
+                {
+                    photonView.RPC(nameof(ResetPosition), RpcTarget.Others, (Vector2)transform.position);
+                }
             }
         }
         else
         {
             sprite.color = Color.red;
         }
+    }
+
+    [PunRPC]
+    private void ResetPosition(Vector2 position)
+    {
+        transform.position = position;
     }
 
     private bool clickFirst = true;//ˆê”ÔÅ‰‚ÌƒtƒŒ[ƒ€‚ğ”»’è‚·‚ébool
@@ -155,8 +165,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
             //PunRPC‚É‚Â‚¢‚Ä https://zenn.dev/o8que/books/bdcb9af27bdd7d/viewer/2e3520
     private void Shoot(Vector2 force, Vector2 position)
     {
-        rb.AddForce(force * -50);
         transform.position = position;//ƒ‰ƒO‚ğ–h‚®
+        rb.AddForce(force * -50);
         audioSource.PlayOneShot(shotSound);
     }
 
