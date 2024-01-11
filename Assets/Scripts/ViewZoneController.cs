@@ -11,18 +11,24 @@ public class ViewZoneController : MonoBehaviourPunCallbacks,IPointerDownHandler,
 {
     public void OnPointerDown(PointerEventData eventData)
     {
-        foreach(GameObject player in GameManager.playerAvatars)
+        if(GameManager.gameState == GameManager.GameState.game)
         {
-            if (player.GetPhotonView().IsMine)
+            foreach (GameObject player in GameManager.playerAvatars)
             {
-                player.GetComponent<PlayerController>().IsOnDragZone = true;
+                if (player.GetPhotonView().IsMine)
+                {
+                    player.GetComponent<PlayerController>().IsOnDragZone = true;
+                }
             }
         }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        StartCoroutine(PointerUp());
+        if(GameManager.gameState == GameManager.GameState.game)
+        {
+            StartCoroutine(PointerUp());
+        }
     }
 
     public IEnumerator PointerUp()

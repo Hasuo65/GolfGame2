@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2077911218974834195, guid: 960c9cac9fc3d64428b1a8a07a8722aa, type: 3}
       propertyPath: m_Name
-      value: SlipperlyGreen Variant
+      value: SlipperlyGreen
       objectReference: {fileID: 0}
     - target: {fileID: 4300533300673190528, guid: 960c9cac9fc3d64428b1a8a07a8722aa, type: 3}
       propertyPath: m_Size.x
@@ -139,7 +139,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 7313642874386459277}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 135202565c2f6214d95201156347b014, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

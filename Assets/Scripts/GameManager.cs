@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
+using UnityEngine.UI;
 
 /// <summary>
 /// ゲームのシステムについてのクラス
@@ -19,6 +20,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField] public GameObject playerScorePanelObject;//プレイヤーのスコアを表示するパネルをアタッチする    StartでplayerScorePanelに割り当てる
     public static GameObject playerScorePanel;
 
+    [SerializeField] private Scrollbar cameraSliderx;
+    [SerializeField] private Scrollbar cameraSlidery;
+
     [SerializeField] private CountDown countDown;
     [SerializeField] private int timeLimit;
 
@@ -26,9 +30,12 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     [System.NonSerialized]public RoomGameManager roomGameManager;//RoomGameNanagerのインスタンス
 
+    [SerializeField] private GameObject resultScreen;
+    private GameObject[] lastPlayers;
+
     public enum GameState {
         game,//実際のゲーム時
-        prop,//障害物を置く時
+        interval,//障害物を置く時
         gameOver//ゲームオーバー
     }
     public static GameState gameState = GameState.game;
@@ -55,6 +62,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         ExitGames.Client.Photon.Hashtable hashTable = new ExitGames.Client.Photon.Hashtable();
         hashTable["score"] = 0;
         hashTable["hit"] = 0;
+        hashTable["wiped"] = false;
         PhotonNetwork.LocalPlayer.SetCustomProperties(hashTable);
 
         PhotonNetwork.Instantiate("PlayerScoreDisplay", new Vector2(0, 0), Quaternion.identity);//スコアボードに追加
@@ -65,7 +73,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void SetRoomGameManager(RoomGameManager roomGameManager)//ラグがあるのでインスタンス化されたときに指定する
     {
-        Debug.Log("SetROomManager");
+        Debug.Log("SetRoomManager");
         this.roomGameManager = roomGameManager;
     }
 
@@ -84,16 +92,25 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         if (!hasRoundEnd)
         {
-            foreach (GameObject player in playerAvatars)
+            lastPlayers = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject player in lastPlayers)
             {
                 if (!RoomGameManager.goaledPlayer.Contains(player.GetPhotonView().Owner))
                 {
-                    Destroy(player);
                     RoomGameManager.playersWipedOut.Add(player.GetPhotonView().Owner);
-                    gameState = GameState.gameOver;
+                    Destroy(player);
                 }
             }
+            if (RoomGameManager.playersWipedOut.Contains(PhotonNetwork.LocalPlayer))
+            {
+                gameState = GameState.gameOver;
+            }
             playerAvatars.Clear();
+            if(RoomGameManager.playersWipedOut.Count >= PhotonNetwork.PlayerList.Length)
+            {
+                GameOverScreen();
+                return;
+            }
             if(gameState == GameState.game)
             {
                 readyButton.SetActive(true);
@@ -105,17 +122,50 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void OnStartRound()
     {
-        RoomGameManager.goaledPlayer.Clear();
-        if (RoomGameManager.playersWipedOut.Contains(PhotonNetwork.LocalPlayer))
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        if (players.Length != 0)
         {
-            Debug.Log("Wiped");
+            foreach (GameObject obj in players)
+            {
+                Destroy(obj);
+            }
         }
-        else
-        {
+        Debug.Log("OnStartRound");
+        RoomGameManager.goaledPlayer.Clear();
+        if(gameState == GameState.game){
             readyButton.SetActive(false);
             playerList.SetActive(true);
         }
         countDown.StartCountDown(timeLimit, this);//カウントダウンを始める
+        timeLimit -= 5;
         hasRoundEnd = false;
+    }
+
+    public void GameOverScreen()
+    {
+        cameraSliderx.value = 0;
+        cameraSlidery.value = 0;
+        resultScreen.SetActive(true);
+        List<Player> wonPlayers = new List<Player>();//同着があるのでリストにする
+        int leastHit = 1000;
+        foreach (GameObject player in lastPlayers)
+        {
+            Player owner = player.GetPhotonView().Owner;
+            var hashTable = owner.CustomProperties;
+            if((int)hashTable["hit"] < leastHit)//リストに追加する
+            {
+                wonPlayers.Clear();
+                wonPlayers.Add(owner);
+                leastHit = (int)hashTable["hit"];
+            }
+            else if((int)hashTable["hit"] == leastHit)
+            {
+                wonPlayers.Add(owner);
+            }
+        }
+        foreach(Player wonPlayer in wonPlayers)
+        {
+            resultScreen.transform.GetChild(0).GetChild(0).gameObject.GetComponent<TMP_Text>().text += wonPlayer.NickName + "\n";
+        }
     }
 }

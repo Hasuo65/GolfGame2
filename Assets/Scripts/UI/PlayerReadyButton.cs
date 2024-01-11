@@ -30,7 +30,7 @@ public class PlayerReadyButton : MonoBehaviourPunCallbacks
         if (isPlayerReady)
         {
             roomHashtable["r"] = (int)roomHashtable["r"] - 1;
-            image.color = Color.white;
+            image.color = new Color(0.8679245f, 0.8679245f, 0.8679245f);
             isPlayerReady = false;
         }
         else

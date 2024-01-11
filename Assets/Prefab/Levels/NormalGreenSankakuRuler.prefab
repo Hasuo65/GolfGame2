@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2077911218974834195, guid: 960c9cac9fc3d64428b1a8a07a8722aa, type: 3}
       propertyPath: m_Name
-      value: NormalGreenSankakuRuler Variant
+      value: NormalGreenSankakuRuler
       objectReference: {fileID: 0}
     - target: {fileID: 4300533300673190528, guid: 960c9cac9fc3d64428b1a8a07a8722aa, type: 3}
       propertyPath: m_Sprite
@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9064306807414119680, guid: 960c9cac9fc3d64428b1a8a07a8722aa, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 26177565fa4ea784da3bf3c822c33d07, type: 2}
     - target: {fileID: 9064306807414119680, guid: 960c9cac9fc3d64428b1a8a07a8722aa, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 10.24

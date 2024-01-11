@@ -11,6 +11,8 @@ public class CountDown : MonoBehaviour
 
     private GameManager gameManager;
 
+    private GameObject timeUpScreen;
+
     private void Start()
     {
         text = GetComponent<TMP_Text>();
@@ -25,7 +27,8 @@ public class CountDown : MonoBehaviour
 
     private IEnumerator Down()
     {
-        while (true)
+        bool w = true;
+        while (w)
         {
             yield return new WaitForSeconds(1);
             count--;
@@ -33,7 +36,7 @@ public class CountDown : MonoBehaviour
             if(count <= 0)
             {
                 gameManager.OnEndRound();
-                break;
+                w = false;
             }
         }
     }
