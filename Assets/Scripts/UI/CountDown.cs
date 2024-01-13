@@ -13,31 +13,40 @@ public class CountDown : MonoBehaviour
 
     private GameObject timeUpScreen;
 
+    private Coroutine coroutine;
+
     private void Start()
     {
         text = GetComponent<TMP_Text>();
     }
 
+    private bool isFirstRound = true;
+
     public void StartCountDown(int timeLimit,GameManager gameManager)
     {
+        if (!isFirstRound)
+        {
+            StopCoroutine(coroutine);
+        }
         this.gameManager = gameManager;//ゲームマネージャーの初期化
-        count = timeLimit;
-        StartCoroutine(Down());
+        coroutine = StartCoroutine(Down(timeLimit));
+        isFirstRound = false;
+        Debug.Log("StartCountDown");
     }
 
-    private IEnumerator Down()
+    private IEnumerator Down(int timeLimit)
     {
-        bool w = true;
-        while (w)
+        count = timeLimit;
+        while (true)
         {
-            yield return new WaitForSeconds(1);
             count--;
             text.text = count.ToString("00");
             if(count <= 0)
             {
                 gameManager.OnEndRound();
-                w = false;
+                yield break;
             }
+            yield return new WaitForSeconds(1);
         }
     }
 }

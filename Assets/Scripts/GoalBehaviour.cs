@@ -23,11 +23,15 @@ public class GoalBehaviour : MonoBehaviourPunCallbacks
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.transform.parent.tag == "Player")//プレイヤーだけに処理する
+        if(collision.tag == "Ball")//プレイヤーだけに処理する
         {
             audioSource.PlayOneShot(goalSound);//音を鳴らす
-            Player owner = collision.transform.parent.gameObject.GetPhotonView().Owner;//ボールの所有者
-            gameManager.roomGameManager.PlayerGoal(owner);
+            PhotonView owner = collision.transform.parent.gameObject.GetPhotonView();//ボールの所有者
+            if (owner.IsMine)
+            {
+                PlayerController.scrollBarMode = true;
+            }
+            gameManager.roomGameManager.PlayerGoal(owner.Owner);
             collision.transform.parent.position = new Vector2(0,-10);
             
         }

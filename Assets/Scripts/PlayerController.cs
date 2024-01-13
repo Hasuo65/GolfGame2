@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     private GameObject ip;//initialPointのインスタンス
 
     [System.NonSerialized]public bool IsOnDragZone = false;//ViewZoneCOntrollerで操作する
+    [System.NonSerialized] public static bool scrollBarMode = false;
 
     private bool isStop = false;//ボールが打った後止まっているかのbool
     [SerializeField] private int maxHitTime;
@@ -57,6 +58,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
             {
                 OnClickExit();
             }
+        }
+        if (!scrollBarMode&&photonView.IsMine)
+        {
+            Camera.main.transform.position = new Vector3(transform.position.x,transform.position.y,-10);
         }
     }
 
@@ -259,7 +264,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
     /// </summary>
     public void BeginSimulation()
     {
-        Debug.Log("Begin");
         currentPosition = rb.position;
     }
 
@@ -275,7 +279,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 {
                     currentForce *= MaxMagnitude / currentForce.magnitude;
                 }*/
-        Debug.Log("During");
         StartCoroutine(Simulation());
     }
 
@@ -294,7 +297,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
 
         // 運動の軌跡をシミュレーションして記録する
-        for (var i = 1; i < 16; i++)
+        for (var i = 1; i < 32; i++)
         {
             Physics2D.Simulate(DeltaTime);
             points.Add(rb.position - currentPosition);

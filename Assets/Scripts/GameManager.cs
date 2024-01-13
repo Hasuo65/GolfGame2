@@ -133,11 +133,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         Debug.Log("OnStartRound");
         RoomGameManager.goaledPlayer.Clear();
         if(gameState == GameState.game){
+            PlayerController.scrollBarMode = false;
             readyButton.SetActive(false);
             playerList.SetActive(true);
         }
         countDown.StartCountDown(timeLimit, this);//カウントダウンを始める
-        timeLimit -= 5;
+        timeLimit -= 10;
         hasRoundEnd = false;
     }
 
