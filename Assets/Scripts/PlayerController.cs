@@ -291,10 +291,13 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         // 自動的な物理運動を停止させる
         Physics2D.simulationMode = SimulationMode2D.Script;
+        gameObject.tag = "NonPlayer";
 
         var points = new List<Vector2> { };
         rb.AddForce(fireVec * -50);
 
+
+        
 
         // 運動の軌跡をシミュレーションして記録する
         for (var i = 1; i < 32; i++)
@@ -305,6 +308,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
 
         // もとの位置に戻す
+        gameObject.tag = "Player";
         rb.velocity = Vector2.zero;
         transform.position = currentPosition;
 
